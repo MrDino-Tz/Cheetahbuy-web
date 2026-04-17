@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
-import { Save, Settings, Shield, Bell, Globe, DollarSign, Tool } from 'lucide-react'
+import { Save, Settings, Shield, Bell, Globe, DollarSign, Wrench } from 'lucide-react'
 
 export default function AdminSettings() {
   const [loading, setLoading] = useState(false)

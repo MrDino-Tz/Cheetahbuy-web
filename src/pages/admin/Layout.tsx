@@ -14,7 +14,9 @@ import {
   FolderTree,
   Image as ImageIcon,
   Sun,
-  Moon
+  Moon,
+  Bike,
+  UserCog
 } from 'lucide-react'
 
 const menuItems = [
@@ -22,6 +24,8 @@ const menuItems = [
   { path: '/admin/categories', label: 'Categories', icon: FolderTree },
   { path: '/admin/promos', label: 'Banner Promos', icon: ImageIcon },
   { path: '/admin/vendors', label: 'Vendors', icon: ShoppingBag },
+  { path: '/admin/riders', label: 'Riders', icon: Bike },
+  { path: '/admin/users', label: 'Users', icon: UserCog },
   { path: '/admin/customers', label: 'Customers', icon: Users },
   { path: '/admin/orders', label: 'Orders', icon: Package },
   { path: '/admin/analytics', label: 'Analytics', icon: TrendingUp },

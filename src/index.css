@@ -10,29 +10,62 @@
   --radius: 1rem;
 }
 
+/* ⚡ Fix: Tell Tailwind v4 to use the .dark class for the 'dark:' variant */
+@variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --background: #fcfcfc;
+    --foreground: #18181b;
+  }
+
+  .dark {
+    --background: #09090b;
+    --foreground: #fafafa;
+  }
+}
+
 @layer base {
   * {
-    border-color: var(--color-border);
+    border-color: var(--color-zinc-200);
     font-family: var(--font-sans);
-    transition: background-color 0.2s ease, border-color 0.2s ease;
   }
+  
+  .dark * {
+    border-color: var(--color-zinc-800);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    transition: background-color 0.5s ease;
+  }
+
   body {
     background-color: #fcfcfc;
     color: var(--color-foreground);
     letter-spacing: -0.01em;
-  }
-  .dark body {
-    background-color: #09090b;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
-  /* Compact Scrollbars */
+  .dark body {
+    background-color: #09090b;
+    color: #fafafa;
+  }
+  
+  /* Premium Scrollbars */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
   ::-webkit-scrollbar-thumb {
     background: #e4e4e7;
-    border-radius: 10px;
+    border-radius: 20px;
+    border: 2px solid #fcfcfc;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: #27272a;
+    border: 2px solid #09090b;
   }
   ::-webkit-scrollbar-track {
     background: transparent;

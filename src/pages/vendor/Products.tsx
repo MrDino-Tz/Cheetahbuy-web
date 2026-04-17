@@ -77,13 +77,18 @@ export default function VendorProducts() {
     const file = e.target.files?.[0]
     if (!file) return
     setUploading(true)
+    
     const result = await uploadToSupabaseStorage(file, 'products', 'uploads')
-    if (result.success) {
+    
+    if (result.success && result.url) {
       if (isEdit) {
         setEditData({ ...editData, image_url: result.url })
       } else {
         setFormData({ ...formData, image_url: result.url })
       }
+    } else {
+      console.error('Upload failed:', result.error)
+      alert('Image upload failed: ' + (result.error || 'Unknown error. Please ensure the products bucket exists in Supabase Storage.'))
     }
     setUploading(false)
   }

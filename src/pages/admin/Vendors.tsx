@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
-import { ShieldCheck, Truck, Clock, Store } from 'lucide-react'
+import { AddUserModal } from '../../components/AddUserModal'
+import { ShieldCheck, Truck, Clock, Store, UserPlus } from 'lucide-react'
 
 interface Vendor {
   id: string
@@ -14,20 +15,20 @@ interface Vendor {
 export default function AdminVendors() {
   const [vendors, setVendors] = useState<Vendor[]>([])
   const [loading, setLoading] = useState(true)
+  const [showAddModal, setShowAddModal] = useState(false)
+
+  async function loadVendors() {
+    setLoading(true)
+    const { data, error } = await supabase
+      .from('vendors')
+      .select('*')
+      .order('created_at', { ascending: false })
+    
+    if (data) setVendors(data as Vendor[])
+    setLoading(false)
+  }
 
   useEffect(() => {
-    async function loadVendors() {
-      // In Supabase, if we have foreign keys correctly set up:
-      // We can select '*, profiles(email, full_name)'
-      // If the FK is not set up perfectly, we fallback to just fetching vendors.
-      const { data, error } = await supabase
-        .from('vendors')
-        .select('*')
-        .order('created_at', { ascending: false })
-      
-      if (data) setVendors(data as Vendor[])
-      setLoading(false)
-    }
     loadVendors()
   }, [])
 
@@ -42,12 +43,28 @@ export default function AdminVendors() {
   return (
     <div className="space-y-6">
       {/* Header section */}
-      <div>
-        <h1 className="text-2xl font-bold text-zinc-900 dark:text-white flex items-center gap-2">
-          <Store className="w-6 h-6 text-orange-500" /> Registered Vendors
-        </h1>
-        <p className="text-zinc-500 dark:text-zinc-400">View and manage all approved store vendors across the platform.</p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+            <Store className="w-6 h-6 text-orange-500" /> Registered Vendors
+          </h1>
+          <p className="text-zinc-500 dark:text-zinc-400">View and manage all approved store vendors across the platform.</p>
+        </div>
+        <button
+          onClick={() => setShowAddModal(true)}
+          className="flex items-center gap-2 px-5 py-2.5 bg-orange-500 text-white rounded-xl text-sm font-semibold hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/20"
+        >
+          <UserPlus className="size-4" />
+          Add Vendor
+        </button>
       </div>
+
+      <AddUserModal
+        isOpen={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        role="VENDOR"
+        onUserAdded={() => loadVendors()}
+      />
 
       {/* Main Table Card */}
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm rounded-3xl overflow-hidden">
