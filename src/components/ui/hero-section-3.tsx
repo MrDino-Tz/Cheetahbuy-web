@@ -114,7 +114,7 @@ export function HeroSection() {
                                             {/* App Top Bar */}
                                             <div className="pt-12 px-6 pb-4 flex items-center justify-between">
                                                 <div className="flex items-center gap-2">
-                                                    <div className="size-8 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-xs italic">CB</div>
+                                                    <img src="/cheetah12post.png" alt="Logo" className="size-8 rounded-full object-contain bg-white shadow-sm" />
                                                     <span className="text-xs font-black dark:text-white uppercase tracking-wider">CheetahBuy</span>
                                                 </div>
                                                 <div className="flex gap-1">

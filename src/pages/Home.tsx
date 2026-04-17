@@ -83,7 +83,9 @@ export default function Home() {
                       className="absolute z-10 -translate-x-16 sm:-translate-x-32 -translate-y-12 sm:-translate-y-16 p-6 sm:p-8 bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-[32px] sm:rounded-[40px] shadow-xl w-60 sm:w-72 pointer-events-auto"
                     >
                         <div className="flex gap-4 items-center">
-                            <div className="size-10 sm:size-12 rounded-xl sm:rounded-2xl bg-white dark:bg-zinc-800 flex items-center justify-center shadow-sm"><Pizza className="size-5 sm:size-6 text-orange-500" /></div>
+                            <div className="size-10 sm:size-12 rounded-xl sm:rounded-2xl bg-white dark:bg-zinc-800 flex items-center justify-center shadow-sm overflow-hidden">
+                                <img src="/cheetah12post.png" alt="Logo" className="size-6 sm:size-8 object-contain" />
+                            </div>
                             <div>
                                 <h4 className="text-xs sm:text-sm font-black dark:text-white">Cheetah Pizza</h4>
                                 <div className="flex gap-1 mt-1">

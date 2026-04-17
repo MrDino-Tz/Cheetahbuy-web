@@ -60,7 +60,7 @@ export default function FooterSection() {
                     <div className="lg:col-span-4 space-y-6">
                         <Link to="/" className="flex items-center size-fit group">
                             <img 
-                                src="/cheetah_logo.webp" 
+                                src="/cheetah12post.png" 
                                 alt="CheetahBuy" 
                                 className="w-10 h-10 object-contain group-hover:scale-110 transition-transform duration-300"
                             />

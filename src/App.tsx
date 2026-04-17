@@ -37,7 +37,7 @@ import Pickup from './pages/Pickup'
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.PROD ? '/Cheetahbuy-web' : ''}>
       <NetworkStatus />
       <Routes>
         {/* Public routes */}

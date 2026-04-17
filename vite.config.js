@@ -3,8 +3,9 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath, URL } from 'node:url';
 // https://vite.dev/config/
-export default defineConfig({
-    base: '/Cheetahbuy-web/',
+export default defineConfig(({ command }) => {
+  return {
+    base: command === 'build' ? '/Cheetahbuy-web/' : '/',
     plugins: [react(), tailwindcss()],
     resolve: {
         alias: {
@@ -17,4 +18,5 @@ export default defineConfig({
         host: true,
         allowedHosts: ['thirstiest-divina-noncentrally.ngrok-free.dev', '.ngrok-free.dev']
     },
+  }
 });
