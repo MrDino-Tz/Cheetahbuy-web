@@ -67,9 +67,7 @@ export function Header() {
 			<nav className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-4">
 				<div className="flex items-center gap-5">
 					<Link to="/" className="flex items-center gap-2">
-						<div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-pink-600 flex items-center justify-center">
-							<span className="text-white text-lg font-bold">🦁</span>
-						</div>
+						<img src="/cheetah12post.png" alt="CheetahBuy" className="w-8 h-8 object-contain" />
 						<span className="text-xl font-bold text-zinc-900 dark:text-white">CheetahBuy</span>
 					</Link>
 					<NavigationMenu className="hidden md:flex">

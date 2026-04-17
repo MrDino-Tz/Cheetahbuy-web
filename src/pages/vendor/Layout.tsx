@@ -65,7 +65,7 @@ export default function VendorLayout() {
       {/* Mobile header */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b dark:bg-zinc-900 dark:border-zinc-800 px-4 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <img src="/cheetah_logo.webp" alt="CheetahBuy" className="w-8 h-8 object-contain" />
+          <img src="/cheetah12post.png" alt="CheetahBuy" className="w-8 h-8 object-contain" />
           <span className="text-lg font-bold text-zinc-900 dark:text-white">CheetahBuy Vendor</span>
         </Link>
         <div className="flex items-center gap-2">
@@ -94,7 +94,7 @@ export default function VendorLayout() {
       `}>
         <div className="p-6 border-b dark:border-zinc-800">
           <Link to="/" className="flex items-center gap-2">
-            <img src="/cheetah_logo.webp" alt="CheetahBuy" className="w-10 h-10 object-contain" />
+            <img src="/cheetah12post.png" alt="CheetahBuy" className="w-10 h-10 object-contain" />
             <span className="text-xl font-bold text-zinc-900 dark:text-white">CheetahBuy</span>
           </Link>
           <div className="flex items-center justify-between mt-4">

@@ -139,24 +139,24 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-8 pb-12">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-black tracking-tight text-zinc-900 dark:text-white">Admin Dashboard</h1>
-          <p className="text-zinc-500 dark:text-zinc-400 mt-1">Real-time overview of the CheetahBuy platform.</p>
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-white">Admin Dashboard</h1>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Real-time overview of the CheetahBuy platform.</p>
         </div>
         <div className="flex gap-3">
             <Link 
-            to="/admin/vendors" 
-            className="flex items-center gap-2 px-6 py-3 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-2xl text-sm font-bold shadow-xl shadow-zinc-900/10 hover:scale-[1.02] active:scale-95 transition-all"
+                to="/admin/vendors" 
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-2xl text-sm font-bold shadow-xl shadow-zinc-900/10 hover:scale-[1.02] active:scale-95 transition-all"
             >
-            Manage Vendors
-            <ChevronRight className="size-4" />
+                Manage Vendors
+                <ChevronRight className="size-4" />
             </Link>
         </div>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {[
             { label: 'Total Vendors', value: stats.vendors, icon: Store, color: 'orange', trend: '+12%' },
             { label: 'Total Orders', value: stats.orders, icon: ShoppingCart, color: 'blue', trend: '+8%' },
@@ -183,8 +183,8 @@ export default function AdminDashboard() {
                         </div>
                     </div>
                     <div>
-                        <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">{stat.label}</p>
-                        <h3 className="text-3xl font-black text-zinc-900 dark:text-white mt-1">{stat.value.toLocaleString()}</h3>
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{stat.label}</p>
+                        <h3 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white mt-1 leading-none">{stat.value.toLocaleString()}</h3>
                     </div>
                 </div>
             </motion.div>
@@ -308,14 +308,16 @@ export default function AdminDashboard() {
               <div className="p-2 bg-orange-500/10 rounded-xl">
                   <TrendingUp className="size-5 text-orange-500" />
               </div>
-              <h2 className="text-xl font-black text-zinc-900 dark:text-white">Recent Transactions</h2>
+              <h2 className="text-lg sm:text-xl font-black text-zinc-900 dark:text-white">Recent Transactions</h2>
           </div>
-          <Link to="/admin/orders" className="flex items-center gap-1 text-sm font-bold text-orange-500 hover:text-orange-600 transition-colors">
+          <Link to="/admin/orders" className="flex items-center gap-1 text-xs sm:text-sm font-bold text-orange-500 hover:text-orange-600 transition-colors">
             View Ledger
             <ArrowUpRight className="size-4" />
           </Link>
         </div>
-        <div className="overflow-x-auto">
+
+        {/* Desktop Table View */}
+        <div className="hidden lg:block overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="bg-zinc-50/50 dark:bg-zinc-800/30">
@@ -365,6 +367,41 @@ export default function AdminDashboard() {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Card View */}
+        <div className="lg:hidden divide-y divide-zinc-100 dark:divide-zinc-800">
+            {recentOrders.length === 0 ? (
+                <div className="px-6 py-12 text-center text-zinc-400 italic">No transaction history found.</div>
+            ) : (
+                recentOrders.map((order) => (
+                    <div key={order.id} className="p-6 flex flex-col gap-4">
+                        <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-mono font-bold bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded text-zinc-500">
+                                {order.id.slice(0, 12).toUpperCase()}
+                            </span>
+                            <span className="text-[10px] text-zinc-400 font-bold">
+                                {new Date(order.created_at).toLocaleDateString()}
+                            </span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-sm font-bold text-zinc-900 dark:text-white">{order.profiles?.full_name || 'Anonymous'}</span>
+                            <span className="text-[10px] text-zinc-500">{order.vendors?.name || 'Cheetah Logistics'}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <span className="text-base font-black text-zinc-900 dark:text-white">
+                                TSH {parseFloat(order.total_price || '0').toLocaleString()}
+                            </span>
+                            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full ${getStatusColor(order.status)} border border-current opacity-80`}>
+                                {getStatusIcon(order.status)}
+                                <span className="text-[10px] font-black uppercase tracking-tight">
+                                    {order.status?.replace('_', ' ') || 'Pending'}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                ))
+            )}
         </div>
       </motion.div>
     </div>

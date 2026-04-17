@@ -249,18 +249,18 @@ function VendorLogin() {
     >
       {/* Auth Card */}
       <div 
-        className="w-full max-w-lg rounded-3xl p-10 sm:p-12"
+        className="w-full max-w-lg rounded-[32px] sm:rounded-[48px] p-8 sm:p-12 border border-zinc-900 dark:border-zinc-800/50"
         style={{ backgroundColor: CARD_BG }}
       >
         {/* Logo */}
         <div className="flex justify-center mb-6">
-          <img src="/cheetah_logo.webp" alt="CheetahBuy" className="w-12 h-12 object-contain" />
+          <img src="/cheetah12post.png" alt="CheetahBuy" className="w-12 h-12 object-contain" />
         </div>
 
         {/* Heading */}
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-white mb-3">Vendor Login</h1>
-          <p className="text-gray-400 text-base">Manage your digital storefront.</p>
+        <div className="text-center mb-8 sm:mb-10">
+          <h1 className="text-3xl sm:text-4xl font-black text-white mb-2 sm:mb-3 tracking-tight">Vendor Login</h1>
+          <p className="text-zinc-500 text-sm sm:text-base font-medium">Manage your digital storefront.</p>
         </div>
 
         {/* Form */}
@@ -418,49 +418,47 @@ function VendorRegister() {
     >
       {/* Auth Card */}
       <div 
-        className="w-full max-w-lg rounded-3xl p-10 sm:p-12"
+        className="w-full max-w-xl rounded-[32px] sm:rounded-[48px] p-8 sm:p-12 border border-zinc-900 dark:border-zinc-800/50 shadow-2xl"
         style={{ backgroundColor: CARD_BG }}
       >
         {/* Logo */}
         <div className="flex justify-center mb-6">
-          <img src="/cheetah_logo.webp" alt="CheetahBuy" className="w-12 h-12 object-contain" />
+          <img src="/cheetah12post.png" alt="CheetahBuy" className="w-12 h-12 object-contain" />
         </div>
 
         {/* Heading */}
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-white mb-3">Become a Vendor</h1>
-          <p className="text-gray-400 text-base">Join the fastest delivery network.</p>
+        <div className="text-center mb-8 sm:mb-10">
+          <h1 className="text-3xl sm:text-4xl font-black text-white mb-2 sm:mb-3 tracking-tight">Become a Vendor</h1>
+          <p className="text-zinc-500 text-sm sm:text-base font-medium">Join the fastest delivery network in the region.</p>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           {/* Name & Shop */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
-                Full Name
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-[10px] sm:text-xs font-black text-zinc-500 uppercase tracking-widest pl-1">
+                Full Identity
               </label>
               <input
                 type="text"
-                placeholder="John Doe"
+                placeholder="CEO / Admin Name"
                 value={formData.full_name}
                 onChange={e => setFormData({...formData, full_name: e.target.value})}
-                className="w-full h-14 px-4 border-0 text-gray-900 placeholder:text-gray-500 rounded-xl text-base outline-none"
-                style={{ backgroundColor: INPUT_BG }}
+                className="w-full h-14 px-5 bg-zinc-800 border-0 text-white placeholder:text-zinc-600 rounded-2xl text-base outline-none focus:ring-2 focus:ring-orange-500 transition-all font-medium"
                 required
               />
             </div>
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
-                Shop Name
+            <div className="space-y-2">
+              <label className="text-[10px] sm:text-xs font-black text-zinc-500 uppercase tracking-widest pl-1">
+                Shop Designation
               </label>
               <input
                 type="text"
-                placeholder="My Store"
+                placeholder="Brand Name"
                 value={formData.shop_name}
                 onChange={e => setFormData({...formData, shop_name: e.target.value})}
-                className="w-full h-14 px-4 border-0 text-gray-900 placeholder:text-gray-500 rounded-xl text-base outline-none"
-                style={{ backgroundColor: INPUT_BG }}
+                className="w-full h-14 px-5 bg-zinc-800 border-0 text-white placeholder:text-zinc-600 rounded-2xl text-base outline-none focus:ring-2 focus:ring-orange-500 transition-all font-bold text-orange-500"
                 required
               />
             </div>
@@ -594,12 +592,12 @@ function AdminLogin() {
             className="w-full max-w-md relative z-10"
         >
             <form onSubmit={handleLogin} className="bg-white dark:bg-zinc-900 p-8 md:p-12 rounded-[48px] border-4 border-zinc-900 dark:border-white shadow-[12px_12px_0px_0px_#18181b] dark:shadow-[12px_12px_0px_0px_#ffffff] space-y-6">
-                <div className="text-center mb-8">
-                    <div className="size-16 rounded-2xl bg-zinc-900 dark:bg-white flex items-center justify-center mx-auto mb-4">
+                <div className="text-center mb-6 sm:mb-8">
+                    <div className="size-16 rounded-3xl bg-zinc-900 dark:bg-white flex items-center justify-center mx-auto mb-4 shadow-xl">
                         <span className="text-white dark:text-zinc-900 text-3xl font-bold">⚙️</span>
                     </div>
-                    <h2 className="text-3xl font-black text-zinc-900 dark:text-white uppercase tracking-tighter italic">Admin Portal</h2>
-                    <p className="text-zinc-500 dark:text-zinc-400 font-bold text-xs uppercase tracking-widest mt-2">Authenticated Personnel Only</p>
+                    <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white uppercase tracking-tighter italic">Admin Portal</h2>
+                    <p className="text-zinc-500 dark:text-zinc-400 font-bold text-[9px] sm:text-xs uppercase tracking-[0.2em] mt-2">Security Clearance Required</p>
                 </div>
 
                 <div className="space-y-4">

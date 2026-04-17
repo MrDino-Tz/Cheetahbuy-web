@@ -45,9 +45,9 @@ export function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center group">
             <img 
-              src="/cheetah_logo.webp" 
+              src="/cheetah12post.png" 
               alt="CheetahBuy" 
-              className="w-10 h-10 object-cover group-hover:scale-110 transition-transform duration-300"
+              className="w-10 h-10 object-contain group-hover:scale-110 transition-transform duration-300"
             />
           </Link>
 

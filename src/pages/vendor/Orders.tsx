@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
-import { Package, User, Clock, CheckCircle2, Truck, Timer, ChevronRight, Bike, X } from 'lucide-react'
+import { Package, User, Clock, CheckCircle2, Truck, Timer, ChevronRight, Bike, X, TrendingUp } from 'lucide-react'
 
 interface Rider {
   id: string
@@ -239,28 +239,28 @@ export default function VendorOrders() {
       )}
 
       {/* Header & Filter */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div>
-          <h1 className="text-2xl font-bold text-zinc-900 dark:text-white flex items-center gap-2">
-            <Package className="w-6 h-6 text-orange-500" /> Incoming Orders
+          <h1 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white flex items-center gap-3">
+            <Package className="w-8 h-8 text-orange-500" /> Incoming Orders
           </h1>
-          <p className="text-zinc-500">Manage order fulfillment and rider assignment.</p>
+          <p className="text-sm text-zinc-500 mt-1">Manage order fulfillment and rider assignment.</p>
         </div>
 
-        <div className="flex items-center gap-2 bg-white dark:bg-zinc-900 p-1 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-x-auto">
+        <div className="flex items-center gap-2 bg-white dark:bg-zinc-900 p-1.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-x-auto no-scrollbar">
            <button 
              onClick={() => setFilterStatus('ALL')}
-             className={`px-3 py-1.5 text-xs font-bold rounded-lg whitespace-nowrap transition-all ${filterStatus === 'ALL' ? 'bg-orange-500 text-white shadow-md' : 'text-zinc-500'}`}
+             className={`px-4 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all ${filterStatus === 'ALL' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800'}`}
            >
-             All
+             All Orders
            </button>
-           {['pending', 'ready', 'assigned', 'shipped'].map(s => (
+           {statusOptions.map(s => (
              <button 
                key={s}
                onClick={() => setFilterStatus(s)}
-               className={`px-3 py-1.5 text-xs font-bold rounded-lg whitespace-nowrap transition-all capitalize ${filterStatus === s ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' : 'text-zinc-500'}`}
+               className={`px-4 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all capitalize ${filterStatus === s ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' : 'text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800'}`}
              >
-               {s}
+               {s.replace('_', ' ')}
              </button>
            ))}
         </div>
@@ -277,69 +277,82 @@ export default function VendorOrders() {
               <div className="flex flex-col md:flex-row">
                 
                 {/* Status Column */}
-                <div className={`p-6 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r dark:border-zinc-800 min-w-[140px] ${status.color.replace('text-', 'bg-').replace('100', '50/30')}`}>
-                   <Icon className={`w-8 h-8 mb-2 ${status.color.split(' ')[1]}`} />
-                   <span className={`text-xs font-black uppercase tracking-wider ${status.color.split(' ')[1]}`}>{status.label}</span>
+                <div className={`p-6 flex flex-row md:flex-col items-center justify-between md:justify-center border-b md:border-b-0 md:border-r dark:border-zinc-800 min-w-[140px] ${status.color.replace('text-', 'bg-').replace('100', '50/30')}`}>
+                   <div className="flex items-center gap-3 md:flex-col md:gap-2">
+                    <Icon className={`w-8 h-8 md:w-10 md:h-10 ${status.color.split(' ')[1]}`} />
+                    <span className={`text-[10px] md:text-xs font-black uppercase tracking-widest ${status.color.split(' ')[1]}`}>{status.label}</span>
+                   </div>
+                   <div className="md:hidden text-right">
+                      <p className="text-lg font-black text-zinc-900 dark:text-white leading-none">TSH {(order.total_amount || 0).toLocaleString()}</p>
+                   </div>
                 </div>
 
                 {/* Info Area */}
-                <div className="flex-1 p-6">
-                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                      <div className="space-y-1">
+                <div className="flex-1 p-5 sm:p-6">
+                   <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                      <div className="space-y-2">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-sm font-mono text-orange-500 font-bold">#{order.id.substring(0, 8).toUpperCase()}</span>
-                          <span className="text-zinc-300 dark:text-zinc-700">•</span>
-                          <span className="text-xs text-zinc-500 flex items-center gap-1"><Clock className="w-3 h-3" /> {new Date(order.created_at).toLocaleString()}</span>
+                          <span className="text-xs font-mono text-orange-600 font-black bg-orange-100 dark:bg-orange-500/10 px-2 py-0.5 rounded">#{order.id.substring(0, 8)}</span>
+                          <span className="text-zinc-300 dark:text-zinc-800 hidden sm:inline">•</span>
+                          <span className="text-[10px] sm:text-xs text-zinc-500 flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> {new Date(order.created_at).toLocaleString()}</span>
                         </div>
-                        <h3 className="text-xl font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                        <h3 className="text-xl font-black text-zinc-900 dark:text-white flex items-center gap-2">
                           <User className="w-5 h-5 text-zinc-400" /> {order.profiles?.full_name || 'Anonymous Customer'}
                         </h3>
                         {order.rider?.profiles && (
-                          <p className="text-sm text-blue-600 flex items-center gap-1">
-                            <Bike className="w-4 h-4" /> Rider: {order.rider.profiles.full_name}
-                          </p>
+                          <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 text-blue-600 rounded-full text-[10px] font-bold">
+                            <Bike className="w-3.5 h-3.5" /> Rider: {order.rider.profiles.full_name}
+                          </div>
                         )}
                       </div>
 
-                      <div className="flex flex-col items-end gap-2">
+                      <div className="hidden sm:flex flex-col items-end gap-1">
                         <p className="text-2xl font-black text-zinc-900 dark:text-white">TSH {(order.total_amount || 0).toLocaleString()}</p>
-                        <p className="text-xs text-zinc-500 font-medium">via {order.payment_method}</p>
+                        <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">via {order.payment_method}</p>
                       </div>
                    </div>
 
                     {/* Actions */}
-                    <div className="mt-6 flex flex-wrap items-center gap-3">
-                       {!order.rider_id && order.status === 'ready' && (
-                         <div className="flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 rounded-full text-xs font-bold">
-                           <Bike className="w-4 h-4" />
-                           Auto-assigning rider...
-                         </div>
-                       )}
-                       {order.rider_id && order.status === 'ready' && (
-                         <button 
-                           onClick={() => openRiderModal(order.id)}
-                           className="px-4 py-2 bg-blue-500 text-white rounded-full text-xs font-bold flex items-center gap-2 hover:bg-blue-600 transition-colors"
-                         >
-                           <Bike className="w-4 h-4" />
-                           Change Rider
-                         </button>
-                       )}
-                      <span className="text-sm font-medium text-zinc-500">Update Status:</span>
-                      <div className="flex flex-wrap gap-2">
-                         {['ready', 'shipped', 'delivered', 'cancelled'].map(opt => (
-                           <button 
-                             key={opt}
-                             onClick={() => updateStatus(order.id, opt)}
-                             className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tight border transition-all capitalize
-                               ${order.status?.toLowerCase() === opt 
-                                 ? 'bg-zinc-900 border-zinc-900 text-white dark:bg-white dark:text-zinc-900' 
-                                 : 'bg-transparent border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:border-orange-500 hover:text-orange-500'}`}
-                           >
-                             {opt}
-                           </button>
-                         ))}
-                      </div>
-                   </div>
+                    <div className="mt-6 pt-6 border-t dark:border-zinc-800/50 flex flex-col gap-4">
+                       <div className="flex flex-wrap items-center gap-3">
+                        {!order.rider_id && order.status === 'ready' && (
+                          <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 text-green-600 rounded-full text-[10px] font-black uppercase tracking-wider animate-pulse">
+                            <Bike className="w-3.5 h-3.5" />
+                            Auto-assigning rider...
+                          </div>
+                        )}
+                        {order.rider_id && order.status === 'ready' && (
+                          <button 
+                            onClick={() => openRiderModal(order.id)}
+                            className="bg-blue-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:bg-blue-700 active:scale-95 transition-all shadow-lg shadow-blue-500/20"
+                          >
+                            <Bike className="size-4" />
+                            Dispatch Different Rider
+                          </button>
+                        )}
+                       </div>
+
+                       <div className="space-y-3">
+                        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-400">
+                          <TrendingUp className="size-3" />
+                          Control Logistics
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                            {statusOptions.slice(0, 5).map(opt => (
+                              <button 
+                                key={opt}
+                                onClick={() => updateStatus(order.id, opt)}
+                                className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-tight border transition-all whitespace-nowrap
+                                  ${order.status?.toLowerCase() === opt 
+                                    ? 'bg-zinc-900 border-zinc-900 text-white dark:bg-white dark:text-zinc-900 shadow-md' 
+                                    : 'bg-transparent border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:border-orange-500 hover:text-orange-500'}`}
+                              >
+                                {opt.replace('_', ' ')}
+                              </button>
+                            ))}
+                        </div>
+                       </div>
+                    </div>
                 </div>
               </div>
             </div>

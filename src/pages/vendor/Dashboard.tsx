@@ -166,15 +166,15 @@ export default function VendorDashboard() {
 
   return (
     <div className="space-y-8 pb-12">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-black tracking-tight text-zinc-900 dark:text-white">Business Overview</h1>
-          <p className="text-zinc-500 dark:text-zinc-400 mt-1">Manage your shop operations and track performance.</p>
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-white">Business Overview</h1>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Manage your shop operations and track performance.</p>
         </div>
         <div className="flex gap-3">
             <Link 
                 to="/vendor/products" 
-                className="flex items-center gap-2 px-6 py-3 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-2xl text-sm font-bold shadow-xl shadow-zinc-900/10 hover:scale-[1.02] transition-all"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-2xl text-sm font-bold shadow-xl shadow-zinc-900/10 hover:scale-[1.02] transition-all"
             >
                 <Plus className="size-4" />
                 Add Product
@@ -183,7 +183,7 @@ export default function VendorDashboard() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {[
             { label: 'Products', value: stats.products, icon: ShoppingBag, color: 'orange' },
             { label: 'Orders', value: stats.orders, icon: ShoppingCart, color: 'blue' },
@@ -202,8 +202,8 @@ export default function VendorDashboard() {
                         <stat.icon className={`size-6 text-${stat.color}-600 dark:text-${stat.color}-400`} />
                     </div>
                     <div>
-                        <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">{stat.label}</p>
-                        <h3 className="text-2xl font-black text-zinc-900 dark:text-white mt-1 break-words leading-tight">{stat.value}</h3>
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{stat.label}</p>
+                        <h3 className="text-xl sm:text-2xl font-black text-zinc-900 dark:text-white mt-1 break-words leading-tight">{stat.value}</h3>
                     </div>
                 </div>
             </motion.div>
@@ -299,14 +299,16 @@ export default function VendorDashboard() {
               <div className="p-2 bg-blue-500/10 rounded-xl">
                   <ShoppingCart className="size-5 text-blue-500" />
               </div>
-              <h2 className="text-xl font-black text-zinc-900 dark:text-white">Recent Orders</h2>
+              <h2 className="text-lg sm:text-xl font-black text-zinc-900 dark:text-white">Recent Orders</h2>
           </div>
-          <Link to="/vendor/orders" className="text-sm font-bold text-orange-500 hover:text-orange-600 flex items-center gap-1">
+          <Link to="/vendor/orders" className="text-xs sm:text-sm font-bold text-orange-500 hover:text-orange-600 flex items-center gap-1">
             Fulfill Orders
             <ChevronRight className="size-4" />
           </Link>
         </div>
-        <div className="overflow-x-auto">
+
+        {/* Desktop Table View */}
+        <div className="hidden lg:block overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="bg-zinc-50/50 dark:bg-zinc-800/30">
@@ -352,6 +354,37 @@ export default function VendorDashboard() {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Card View */}
+        <div className="lg:hidden divide-y divide-zinc-100 dark:divide-zinc-800">
+            {recentOrders.length === 0 ? (
+                <div className="px-6 py-12 text-center text-zinc-400 italic">No historical data available.</div>
+            ) : (
+                recentOrders.map((order) => (
+                    <div key={order.id} className="p-6 flex flex-col gap-4">
+                        <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-mono font-bold bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded text-zinc-500 uppercase">
+                                #{order.id.slice(0, 8)}
+                            </span>
+                            <span className="text-[10px] text-zinc-500">
+                                {new Date(order.created_at).toLocaleDateString()}
+                            </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <h4 className="text-lg font-black text-zinc-900 dark:text-white">
+                                TSH {parseFloat(order.total_amount?.toString() || '0').toLocaleString()}
+                            </h4>
+                            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full ${getStatusColor(order.status)} border border-current opacity-80`}>
+                                {getStatusIcon(order.status)}
+                                <span className="text-[10px] font-black uppercase tracking-tight">
+                                    {order.status || 'Received'}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                ))
+            )}
         </div>
       </motion.div>
     </div>
